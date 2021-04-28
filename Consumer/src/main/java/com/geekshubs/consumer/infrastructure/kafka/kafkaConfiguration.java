@@ -34,6 +34,7 @@ public class kafkaConfiguration {
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, User> kafkaListenerContainerFactory(){
         ConcurrentKafkaListenerContainerFactory<String, User> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConcurrency(3);
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
