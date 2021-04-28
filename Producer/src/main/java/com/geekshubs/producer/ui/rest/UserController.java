@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 @RestController
 @RequestMapping("kafka")
 public class UserController {
@@ -18,9 +22,9 @@ public class UserController {
 
 
     @GetMapping("/publish/{name}")
-    public String get(@PathVariable("name") final String name){
+    public String get(@PathVariable("name") final String name) throws ExecutionException, InterruptedException, TimeoutException {
 
-        kafkaTemplate.send(TOPIC,new User(name, "TIC", 12000l));
+        kafkaTemplate.send(TOPIC,new User(name, "TIC", 12000l)).get(10, TimeUnit.SECONDS);
         return "Published successfully";
     }
 
