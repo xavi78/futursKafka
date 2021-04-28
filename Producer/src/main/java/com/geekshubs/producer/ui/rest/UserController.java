@@ -20,7 +20,7 @@ public class UserController {
     @GetMapping("/publish/{name}")
     public String get(@PathVariable("name") final String name){
 
-        kafkaTemplate.send(TOPIC,new User(name, "TIC", 12000l));
+        kafkaTemplate.send(TOPIC,"1",new User(name, "TIC", 12000l));
         return "Published successfully";
     }
 
